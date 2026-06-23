@@ -8,15 +8,18 @@ const Card = () => {
   const [roomId , setRoomId] = useState("");
   const [err,setErr] = useState('');
   const navigate = useNavigate();
+  const [isCreating,setIsCreating] = useState(false);
   const handleCreateRoom = async() => {
+    setIsCreating(true);
     const data = await fetch(`${API_BASE}/create-room`);
     
     const response = await data.json();
 
     if(response.roomId){
+ 
       navigate("/room/"+response.roomId)
     }
-    
+         setIsCreating(false);
   };
 
   const handleJoinRoom = async() => {
@@ -187,7 +190,7 @@ const Card = () => {
                 }}
                 onClick={() => handleCreateRoom()}
               >
-                Create Room
+                {isCreating ? "Creating Room...":"Create Room"}
               </button>
             </div>
           </div>
